@@ -1,0 +1,11 @@
+.env
+.env.local
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+results_*.html
+data/*.pdf
+data/*.txt
+.DS_Store
+
