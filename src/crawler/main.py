@@ -1,5 +1,6 @@
 from src.crawler.github_jobs import search_jobs_github
 from src.crawler.gupy_scraper import search_jobs_gupy
+from src.crawler.remoteok_api import search_remoteok_jobs
 from src.crawler.jobs_manager import load_jobs, save_jobs, merge_jobs
 from src.config import JOBS_FILE
 from src.types import ResumeProfile
@@ -47,6 +48,16 @@ def run_crawler(skills: list = None) -> int:
         all_jobs.extend(gupy_jobs)
     except Exception as e:
         logger.warning(f"Gupy scraper failed: {e}")
+
+    # Step 3: Search RemoteOK API (fallback if other sources failed)
+    if not all_jobs:
+        logger.info("Searching RemoteOK API for remote jobs...")
+        try:
+            remoteok_jobs = search_remoteok_jobs(keywords=skills)
+            logger.info(f"Found {len(remoteok_jobs)} jobs from RemoteOK")
+            all_jobs.extend(remoteok_jobs)
+        except Exception as e:
+            logger.warning(f"RemoteOK API failed: {e}")
 
     if not all_jobs:
         logger.warning("No jobs found from external sources.")
