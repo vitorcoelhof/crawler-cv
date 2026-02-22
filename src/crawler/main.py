@@ -1,51 +1,46 @@
-import asyncio
-from typing import List
-from src.crawler.companies import (
-    parse_remote_jobs_brazil_repo,
-    detect_careers_page,
-    normalize_url,
-)
-from src.crawler.scraper import (
-    fetch_page,
-    fetch_page_async,
-    detect_ats_system,
-    extract_job_postings,
-)
+from src.crawler.adzuna import search_jobs_adzuna
 from src.crawler.jobs_manager import load_jobs, save_jobs, merge_jobs
 from src.config import JOBS_FILE
-from src.types import JobPosting
+from src.types import ResumeProfile
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-async def run_crawler() -> int:
+def run_crawler(skills: list = None) -> int:
     """
-    Main crawler orchestrator.
+    Main crawler orchestrator using Adzuna API.
+
+    Args:
+        skills: List of skills to search for (default: common data skills)
 
     Returns:
         Number of new jobs found
     """
     logger.info("Starting crawler...")
 
-    # Step 1: Parse companies list
-    logger.info("Fetching companies list from lerrua/remote-jobs-brazil...")
-    companies = parse_remote_jobs_brazil_repo()
-    logger.info(f"Found {len(companies)} companies")
+    # Default skills if none provided
+    if not skills:
+        skills = [
+            "Python", "SQL", "Airflow", "PySpark", "Databricks",
+            "Data Engineer", "Data Science", "Machine Learning",
+            "Backend", "Full Stack"
+        ]
 
-    # Step 2: Crawl each company
-    all_jobs = []
-    for idx, company in enumerate(companies):
-        logger.info(f"[{idx+1}/{len(companies)}] Crawling {company['name']}")
-        try:
-            jobs = await crawl_company(company)
-            all_jobs.extend(jobs)
-            logger.info(f"  Found {len(jobs)} jobs")
-        except Exception as e:
-            logger.warning(f"  Error crawling {company['name']}: {e}")
-            continue
+    # Step 1: Try to search jobs via Adzuna API
+    logger.info(f"Searching for jobs with skills: {', '.join(skills[:5])}...")
+    all_jobs = search_jobs_adzuna(skills, location="Brazil", max_results=100)
+    logger.info(f"Found {len(all_jobs)} jobs from Adzuna API")
 
-    # Step 3: Load existing jobs and merge
+    if not all_jobs:
+        logger.warning("Adzuna API failed or returned no results.")
+        logger.info("To use Adzuna API with your own credentials:")
+        logger.info("  1. Sign up at https://www.adzuna.com/api for free")
+        logger.info("  2. Add your app_id and app_key to .env or hardcode in adzuna.py")
+        logger.info("  3. For now, using existing jobs database...")
+        return 0
+
+    # Step 2: Load existing jobs and merge
     logger.info("Merging with existing jobs...")
     existing_jobs = load_jobs(str(JOBS_FILE))
     merged_jobs = merge_jobs(existing_jobs, all_jobs)
@@ -53,57 +48,16 @@ async def run_crawler() -> int:
     new_count = len(merged_jobs) - len(existing_jobs)
     logger.info(f"New jobs: {new_count}, Total: {len(merged_jobs)}")
 
-    # Step 4: Save
+    # Step 3: Save
     logger.info(f"Saving to {JOBS_FILE}...")
     save_jobs(merged_jobs, str(JOBS_FILE))
 
     logger.info("Crawler complete!")
     return new_count
 
-async def crawl_company(company: dict) -> List[JobPosting]:
-    """
-    Crawl a single company to find job postings.
-
-    Args:
-        company: Dict with 'name' and 'url'
-
-    Returns:
-        List of JobPosting objects found
-    """
-    jobs = []
-    base_url = company["url"]
-    company_name = company["name"]
-
-    # Step 1: Generate possible careers page URLs
-    possible_urls = detect_careers_page(base_url)
-
-    # Step 2: Try to fetch each possible URL
-    for career_url in possible_urls:
-        try:
-            logger.debug(f"  Trying {career_url}")
-            html = await fetch_page_async(career_url, use_javascript=False)
-
-            # Detect ATS
-            ats = detect_ats_system(html)
-            if ats:
-                logger.debug(f"  Detected ATS: {ats}")
-
-            # Extract jobs
-            extracted = extract_job_postings(html, company_name, base_url, career_url)
-            if extracted:
-                logger.debug(f"  Found {len(extracted)} jobs on {career_url}")
-                jobs.extend(extracted)
-                break  # Found jobs on this page, stop trying other URLs
-
-        except Exception as e:
-            logger.debug(f"  Failed to fetch {career_url}: {e}")
-            continue
-
-    return jobs
-
 def main():
-    """Synchronous entry point for CLI"""
-    new_jobs = asyncio.run(run_crawler())
+    """Entry point for CLI"""
+    new_jobs = run_crawler()
     print(f"\nCrawler completed. Found {new_jobs} new jobs.")
     return 0
 
