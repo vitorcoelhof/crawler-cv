@@ -36,7 +36,7 @@ Currículo:
 
 Retorne APENAS o JSON, sem explicações adicionais."""
 
-    response = client.messages.create(
+    response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         max_tokens=1024,
         messages=[
@@ -44,7 +44,7 @@ Retorne APENAS o JSON, sem explicações adicionais."""
         ]
     )
 
-    response_text = response.content[0].text
+    response_text = response.choices[0].message.content
     json_str = _extract_json_from_response(response_text)
     data = json.loads(json_str)
 
