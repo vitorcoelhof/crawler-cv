@@ -1,4 +1,5 @@
-from src.crawler.adzuna import search_jobs_adzuna
+from src.crawler.github_jobs import search_jobs_github
+from src.crawler.gupy_scraper import search_jobs_gupy
 from src.crawler.jobs_manager import load_jobs, save_jobs, merge_jobs
 from src.config import JOBS_FILE
 from src.types import ResumeProfile
@@ -9,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def run_crawler(skills: list = None) -> int:
     """
-    Main crawler orchestrator using Adzuna API.
+    Main crawler orchestrator using GitHub Jobs API + Gupy scraper.
 
     Args:
         skills: List of skills to search for (default: common data skills)
@@ -27,20 +28,32 @@ def run_crawler(skills: list = None) -> int:
             "Backend", "Full Stack"
         ]
 
-    # Step 1: Try to search jobs via Adzuna API
-    logger.info(f"Searching for jobs with skills: {', '.join(skills[:5])}...")
-    all_jobs = search_jobs_adzuna(skills, location="Brazil", max_results=100)
-    logger.info(f"Found {len(all_jobs)} jobs from Adzuna API")
+    all_jobs = []
+
+    # Step 1: Search GitHub Jobs API
+    logger.info(f"Searching GitHub Jobs API with skills: {', '.join(skills[:5])}...")
+    try:
+        github_jobs = search_jobs_github(keywords=skills)
+        logger.info(f"Found {len(github_jobs)} jobs from GitHub Jobs API")
+        all_jobs.extend(github_jobs)
+    except Exception as e:
+        logger.warning(f"GitHub Jobs API failed: {e}")
+
+    # Step 2: Scrape Gupy
+    logger.info("Scraping Gupy for Brazilian company jobs...")
+    try:
+        gupy_jobs = search_jobs_gupy()
+        logger.info(f"Found {len(gupy_jobs)} jobs from Gupy scraper")
+        all_jobs.extend(gupy_jobs)
+    except Exception as e:
+        logger.warning(f"Gupy scraper failed: {e}")
 
     if not all_jobs:
-        logger.warning("Adzuna API failed or returned no results.")
-        logger.info("To use Adzuna API with your own credentials:")
-        logger.info("  1. Sign up at https://www.adzuna.com/api for free")
-        logger.info("  2. Add your app_id and app_key to .env or hardcode in adzuna.py")
-        logger.info("  3. For now, using existing jobs database...")
+        logger.warning("No jobs found from any source.")
+        logger.info("Using existing jobs database...")
         return 0
 
-    # Step 2: Load existing jobs and merge
+    # Step 3: Load existing jobs and merge
     logger.info("Merging with existing jobs...")
     existing_jobs = load_jobs(str(JOBS_FILE))
     merged_jobs = merge_jobs(existing_jobs, all_jobs)
@@ -48,7 +61,7 @@ def run_crawler(skills: list = None) -> int:
     new_count = len(merged_jobs) - len(existing_jobs)
     logger.info(f"New jobs: {new_count}, Total: {len(merged_jobs)}")
 
-    # Step 3: Save
+    # Step 4: Save
     logger.info(f"Saving to {JOBS_FILE}...")
     save_jobs(merged_jobs, str(JOBS_FILE))
 

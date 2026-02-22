@@ -5,13 +5,21 @@
     "titulo": "Senior Data Engineer",
     "descricao": "Procuramos um Senior Data Engineer com experiência em arquitetura de dados, PySpark, Airflow e SQL. Trabalhe com pipelines de dados em larga escala.",
     "requisitos": "Python, PySpark, Airflow, SQL, Apache Spark, Databricks",
-    "skills_detectadas": ["Python", "PySpark", "Airflow", "SQL", "Databricks"],
+    "skills_detectadas": [
+      "Python",
+      "PySpark",
+      "Airflow",
+      "SQL",
+      "Databricks"
+    ],
     "senioridade": "Senior",
     "localizacao": "Remoto - Brasil",
     "link": "https://www.nubank.com.br/careers/job/123",
     "data_coleta": "2026-02-22",
     "ats": "Greenhouse",
-    "url_empresa": "https://www.nubank.com.br"
+    "url_empresa": "https://www.nubank.com.br",
+    "salario_min": null,
+    "salario_max": null
   },
   {
     "id": "job-2",
@@ -19,13 +27,20 @@
     "titulo": "Data Scientist - Python & ML",
     "descricao": "Desenvolvedor de modelos de ML usando Python, Airflow para orquestração de workflows e análise de dados com SQL.",
     "requisitos": "Python, Machine Learning, SQL, Airflow, Databricks, TensorFlow",
-    "skills_detectadas": ["Python", "SQL", "Airflow", "Databricks"],
+    "skills_detectadas": [
+      "Python",
+      "SQL",
+      "Airflow",
+      "Databricks"
+    ],
     "senioridade": "Senior",
     "localizacao": "Remoto - Brasil",
     "link": "https://www.inter.co/careers/job/456",
     "data_coleta": "2026-02-22",
     "ats": "Gupy",
-    "url_empresa": "https://www.inter.co"
+    "url_empresa": "https://www.inter.co",
+    "salario_min": null,
+    "salario_max": null
   },
   {
     "id": "job-3",
@@ -33,13 +48,19 @@
     "titulo": "Data Analyst - SQL & Analytics",
     "descricao": "Analista de dados com foco em SQL, criação de dashboards e análise exploratória. Experiência com pipelines de dados é um diferencial.",
     "requisitos": "SQL, Python, Tableau, Power BI, Airflow",
-    "skills_detectadas": ["SQL", "Python", "Airflow"],
+    "skills_detectadas": [
+      "SQL",
+      "Python",
+      "Airflow"
+    ],
     "senioridade": "Pleno",
     "localizacao": "Remoto - Brasil",
     "link": "https://www.creditas.com/careers/job/789",
     "data_coleta": "2026-02-22",
     "ats": "Lever",
-    "url_empresa": "https://www.creditas.com"
+    "url_empresa": "https://www.creditas.com",
+    "salario_min": null,
+    "salario_max": null
   },
   {
     "id": "job-4",
@@ -47,13 +68,21 @@
     "titulo": "Senior Data Pipeline Engineer",
     "descricao": "Construir pipelines de dados robustos com PySpark, Airflow e SQL. Trabalhar com arquitetura de dados em Databricks.",
     "requisitos": "Python, PySpark, Airflow, SQL, Databricks, Apache Kafka",
-    "skills_detectadas": ["Python", "PySpark", "Airflow", "SQL", "Databricks"],
+    "skills_detectadas": [
+      "Python",
+      "PySpark",
+      "Airflow",
+      "SQL",
+      "Databricks"
+    ],
     "senioridade": "Senior",
     "localizacao": "Remoto - Brasil",
     "link": "https://www.hotmart.com/careers/job/321",
     "data_coleta": "2026-02-22",
     "ats": "Greenhouse",
-    "url_empresa": "https://www.hotmart.com"
+    "url_empresa": "https://www.hotmart.com",
+    "salario_min": null,
+    "salario_max": null
   },
   {
     "id": "job-5",
@@ -61,12 +90,101 @@
     "titulo": "Data Engineer - Remoto",
     "descricao": "Desenvolvedor de pipelines ETL com experiência em Python, SQL e orquestração de dados com Airflow.",
     "requisitos": "Python, SQL, Airflow, ETL, Data Warehouse",
-    "skills_detectadas": ["Python", "SQL", "Airflow"],
+    "skills_detectadas": [
+      "Python",
+      "SQL",
+      "Airflow"
+    ],
     "senioridade": "Pleno",
     "localizacao": "Remoto - Brasil",
     "link": "https://www.resultadosdigitais.com.br/careers/job/654",
     "data_coleta": "2026-02-22",
     "ats": "Gupy",
-    "url_empresa": "https://www.resultadosdigitais.com.br"
+    "url_empresa": "https://www.resultadosdigitais.com.br",
+    "salario_min": null,
+    "salario_max": null
+  },
+  {
+    "id": "95be1c8b-bbef-48b4-97fe-394d4c024704",
+    "empresa": "GitHub Inc",
+    "titulo": "Senior Backend Engineer - Python",
+    "descricao": "Build backend services with Python and PostgreSQL",
+    "requisitos": "Python, PostgreSQL, REST API, Docker",
+    "skills_detectadas": [
+      "Python",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "senioridade": "Senior",
+    "localizacao": "Remote - USA",
+    "link": "https://github.com/jobs/123",
+    "data_coleta": "2026-02-22",
+    "ats": null,
+    "url_empresa": "https://github.com",
+    "salario_min": null,
+    "salario_max": null
+  },
+  {
+    "id": "b66dfbd3-144b-4580-b8dd-59ae5a9c1a31",
+    "empresa": "Stripe",
+    "titulo": "Data Engineer - Airflow & PySpark",
+    "descricao": "Work with distributed data pipelines using Airflow and PySpark",
+    "requisitos": "Python, Airflow, PySpark, SQL, Databricks",
+    "skills_detectadas": [
+      "Python",
+      "Airflow",
+      "PySpark",
+      "SQL",
+      "Databricks"
+    ],
+    "senioridade": "Senior",
+    "localizacao": "Remote - USA",
+    "link": "https://stripe.com/jobs/456",
+    "data_coleta": "2026-02-22",
+    "ats": null,
+    "url_empresa": "https://stripe.com",
+    "salario_min": null,
+    "salario_max": null
+  },
+  {
+    "id": "ada8d511-79fd-412d-9572-c2a58466d633",
+    "empresa": "Nubank Tech",
+    "titulo": "Data Engineer Pleno",
+    "descricao": "Trabalhe com pipelines de dados em Airflow e PySpark",
+    "requisitos": "Python, Airflow, PySpark, SQL",
+    "skills_detectadas": [
+      "Python",
+      "Airflow",
+      "PySpark",
+      "SQL"
+    ],
+    "senioridade": "Pleno",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://nubank.gupy.io/job/123",
+    "data_coleta": "2026-02-22",
+    "ats": null,
+    "url_empresa": "https://nubank.com.br",
+    "salario_min": null,
+    "salario_max": null
+  },
+  {
+    "id": "5ecad821-e96f-4638-acd4-7ac3e343b4ef",
+    "empresa": "Inter Bank",
+    "titulo": "Senior Machine Learning Engineer",
+    "descricao": "Develop ML models with Python and TensorFlow",
+    "requisitos": "Python, Machine Learning, TensorFlow, SQL",
+    "skills_detectadas": [
+      "Python",
+      "Machine Learning",
+      "TensorFlow"
+    ],
+    "senioridade": "Senior",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://inter.gupy.io/job/456",
+    "data_coleta": "2026-02-22",
+    "ats": null,
+    "url_empresa": "https://inter.com.br",
+    "salario_min": null,
+    "salario_max": null
   }
 ]
