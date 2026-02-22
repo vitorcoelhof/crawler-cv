@@ -20,7 +20,7 @@ def generate_html_report(
     # Setup Jinja2
     template_dir = Path(__file__).parent / "templates"
     env = Environment(loader=FileSystemLoader(str(template_dir)))
-    template = env.get_template("results.html")
+    template = env.get_template("results_simple.html")
 
     # Render
     html_content = template.render(
