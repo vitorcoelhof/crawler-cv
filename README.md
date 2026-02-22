@@ -165,12 +165,3 @@ A: Sim! É apenas um CLI local. Sem servidor.
 **P: Quantas vagas são coletadas?**
 A: ~500-1000+ dependendo das empresas no repositório lerrua.
 
-## License
-
-MIT
-
-## Support
-
-- 📧 Email: seu-email@example.com
-- 🐛 Issues: https://github.com/seu-usuario/crawler-cv/issues
-- 💬 Discussions: https://github.com/seu-usuario/crawler-cv/discussions
