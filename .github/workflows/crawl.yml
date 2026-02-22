@@ -1,0 +1,52 @@
+name: Daily Crawler
+
+on:
+  schedule:
+    - cron: "0 9 * * *"  # 09:00 UTC daily
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run crawler
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python -m src.crawler.main
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet data/jobs.json; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/jobs.json
+          git commit -m "data: update jobs from daily crawl [skip ci]"
+          git push
+
+      - name: Report
+        if: always()
+        run: |
+          echo "Crawler completed at $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
