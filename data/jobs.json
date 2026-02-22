@@ -1,0 +1,72 @@
+[
+  {
+    "id": "job-1",
+    "empresa": "Nubank",
+    "titulo": "Senior Data Engineer",
+    "descricao": "Procuramos um Senior Data Engineer com experiência em arquitetura de dados, PySpark, Airflow e SQL. Trabalhe com pipelines de dados em larga escala.",
+    "requisitos": "Python, PySpark, Airflow, SQL, Apache Spark, Databricks",
+    "skills_detectadas": ["Python", "PySpark", "Airflow", "SQL", "Databricks"],
+    "senioridade": "Senior",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://www.nubank.com.br/careers/job/123",
+    "data_coleta": "2026-02-22",
+    "ats": "Greenhouse",
+    "url_empresa": "https://www.nubank.com.br"
+  },
+  {
+    "id": "job-2",
+    "empresa": "Inter",
+    "titulo": "Data Scientist - Python & ML",
+    "descricao": "Desenvolvedor de modelos de ML usando Python, Airflow para orquestração de workflows e análise de dados com SQL.",
+    "requisitos": "Python, Machine Learning, SQL, Airflow, Databricks, TensorFlow",
+    "skills_detectadas": ["Python", "SQL", "Airflow", "Databricks"],
+    "senioridade": "Senior",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://www.inter.co/careers/job/456",
+    "data_coleta": "2026-02-22",
+    "ats": "Gupy",
+    "url_empresa": "https://www.inter.co"
+  },
+  {
+    "id": "job-3",
+    "empresa": "Creditas",
+    "titulo": "Data Analyst - SQL & Analytics",
+    "descricao": "Analista de dados com foco em SQL, criação de dashboards e análise exploratória. Experiência com pipelines de dados é um diferencial.",
+    "requisitos": "SQL, Python, Tableau, Power BI, Airflow",
+    "skills_detectadas": ["SQL", "Python", "Airflow"],
+    "senioridade": "Pleno",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://www.creditas.com/careers/job/789",
+    "data_coleta": "2026-02-22",
+    "ats": "Lever",
+    "url_empresa": "https://www.creditas.com"
+  },
+  {
+    "id": "job-4",
+    "empresa": "Hotmart",
+    "titulo": "Senior Data Pipeline Engineer",
+    "descricao": "Construir pipelines de dados robustos com PySpark, Airflow e SQL. Trabalhar com arquitetura de dados em Databricks.",
+    "requisitos": "Python, PySpark, Airflow, SQL, Databricks, Apache Kafka",
+    "skills_detectadas": ["Python", "PySpark", "Airflow", "SQL", "Databricks"],
+    "senioridade": "Senior",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://www.hotmart.com/careers/job/321",
+    "data_coleta": "2026-02-22",
+    "ats": "Greenhouse",
+    "url_empresa": "https://www.hotmart.com"
+  },
+  {
+    "id": "job-5",
+    "empresa": "Resultados Digitais",
+    "titulo": "Data Engineer - Remoto",
+    "descricao": "Desenvolvedor de pipelines ETL com experiência em Python, SQL e orquestração de dados com Airflow.",
+    "requisitos": "Python, SQL, Airflow, ETL, Data Warehouse",
+    "skills_detectadas": ["Python", "SQL", "Airflow"],
+    "senioridade": "Pleno",
+    "localizacao": "Remoto - Brasil",
+    "link": "https://www.resultadosdigitais.com.br/careers/job/654",
+    "data_coleta": "2026-02-22",
+    "ats": "Gupy",
+    "url_empresa": "https://www.resultadosdigitais.com.br"
+  }
+]
