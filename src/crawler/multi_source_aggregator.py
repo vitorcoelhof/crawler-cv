@@ -1,11 +1,13 @@
 """
 Multi-source job aggregator - combines jobs from multiple sources
-RemoteOK + InfoJobs + GetNinja + LinkedIn + RSS feeds
+RemoteOK + InfoJobs + GetNinja + LinkedIn + RSS feeds + Playwright
 """
 from typing import List
 from src.types import JobPosting
 from src.crawler.remoteok_api import search_remoteok_jobs
 from src.crawler.infojobs_scraper import search_infojobs
+from src.crawler.rss_feeds import search_rss_feeds
+from src.crawler.getninja_api import search_getninja
 import logging
 
 logger = logging.getLogger(__name__)
@@ -60,32 +62,33 @@ def search_all_sources(keywords: List[str] = None, max_jobs_per_source: int = 50
         sources_status["InfoJobs"] = f"✗ Failed: {str(e)[:50]}"
         logger.warning(f"InfoJobs failed: {e}")
 
-    # Source 3: GetNinja (placeholder - implement when needed)
-    # try:
-    #     logger.info("Searching GetNinja...")
-    #     getninja_jobs = search_getninja(keywords=keywords)
-    #     all_jobs.extend(getninja_jobs)
-    #     logger.info(f"GetNinja: {len(getninja_jobs)} jobs")
-    # except Exception as e:
-    #     logger.warning(f"GetNinja failed: {e}")
+    # Source 3: RSS Feeds (Tech communities)
+    try:
+        logger.info("Searching RSS feeds...")
+        rss_jobs = search_rss_feeds(keywords=keywords, max_jobs=max_jobs_per_source)
+        all_jobs.extend(rss_jobs)
+        sources_status["RSS Feeds"] = f"✓ {len(rss_jobs)} jobs"
+        logger.info(f"RSS Feeds: {len(rss_jobs)} jobs")
+    except Exception as e:
+        sources_status["RSS Feeds"] = f"✗ Failed: {str(e)[:50]}"
+        logger.warning(f"RSS feeds failed: {e}")
 
-    # Source 4: LinkedIn (requires authentication - placeholder)
-    # try:
-    #     logger.info("Searching LinkedIn...")
-    #     linkedin_jobs = search_linkedin(keywords=keywords)
-    #     all_jobs.extend(linkedin_jobs)
-    #     logger.info(f"LinkedIn: {len(linkedin_jobs)} jobs")
-    # except Exception as e:
-    #     logger.warning(f"LinkedIn failed: {e}")
+    # Source 4: GetNinja (Freelance/PJ)
+    try:
+        logger.info("Searching GetNinja...")
+        getninja_jobs = search_getninja(keywords=keywords, max_jobs=max_jobs_per_source)
+        all_jobs.extend(getninja_jobs)
+        sources_status["GetNinja"] = f"✓ {len(getninja_jobs)} jobs"
+        logger.info(f"GetNinja: {len(getninja_jobs)} jobs")
+    except Exception as e:
+        sources_status["GetNinja"] = f"✗ Failed: {str(e)[:50]}"
+        logger.warning(f"GetNinja failed: {e}")
 
-    # Source 5: RSS Feeds (placeholder - implement when needed)
-    # try:
-    #     logger.info("Searching RSS feeds...")
-    #     rss_jobs = search_rss_feeds(keywords=keywords)
-    #     all_jobs.extend(rss_jobs)
-    #     logger.info(f"RSS Feeds: {len(rss_jobs)} jobs")
-    # except Exception as e:
-    #     logger.warning(f"RSS feeds failed: {e}")
+    # Source 5: LinkedIn (requires authentication)
+    # LinkedIn is very restrictive and requires either:
+    # - Valid account + scraping (against ToS)
+    # - LinkedIn API (requires business account)
+    # Not implemented in MVP
 
     # Summary
     logger.info("\n=== Job Sources Summary ===")
