@@ -65,9 +65,10 @@ def main(resume_path: str, output: str, min_score: float, open: bool):
         # Step 4: Score and rank
         logger.info("Scoring jobs...")
         matches = [score_job(profile, job) for job in jobs]
-        matches = [m for m in matches if m.score >= min_score]
         matches.sort(key=lambda m: m.score, reverse=True)
-        logger.info(f"  Found {len(matches)} matches (score >= {min_score})")
+        high_matches = [m for m in matches if m.score >= min_score]
+        logger.info(f"  Scored all {len(matches)} jobs")
+        logger.info(f"  Found {len(high_matches)} matches (score >= {min_score})")
 
         # Step 5: Generate HTML
         if not output:

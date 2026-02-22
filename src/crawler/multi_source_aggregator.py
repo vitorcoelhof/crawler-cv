@@ -8,6 +8,7 @@ from src.crawler.remoteok_api import search_remoteok_jobs
 from src.crawler.infojobs_scraper import search_infojobs
 from src.crawler.rss_feeds import search_rss_feeds
 from src.crawler.getninja_api import search_getninja
+from src.crawler.playwright_scraper import search_infojobs_with_playwright
 import logging
 
 logger = logging.getLogger(__name__)
@@ -51,10 +52,10 @@ def search_all_sources(keywords: List[str] = None, max_jobs_per_source: int = 50
         sources_status["RemoteOK"] = f"✗ Failed: {str(e)[:50]}"
         logger.warning(f"RemoteOK failed: {e}")
 
-    # Source 2: InfoJobs
+    # Source 2: InfoJobs (with Playwright for JavaScript rendering)
     try:
-        logger.info("Searching InfoJobs...")
-        infojobs_jobs = search_infojobs(keywords=keywords, max_results=max_jobs_per_source)
+        logger.info("Searching InfoJobs with Playwright...")
+        infojobs_jobs = search_infojobs_with_playwright(keywords=keywords, max_jobs=max_jobs_per_source)
         all_jobs.extend(infojobs_jobs)
         sources_status["InfoJobs"] = f"✓ {len(infojobs_jobs)} jobs"
         logger.info(f"InfoJobs: {len(infojobs_jobs)} jobs")

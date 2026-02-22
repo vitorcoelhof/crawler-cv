@@ -52,7 +52,8 @@ def search_remoteok_jobs(keywords: List[str] = None, max_results: int = 100) -> 
 
             try:
                 # Check if job matches keywords
-                title_lower = str(item.get("title", "")).lower()
+                # RemoteOK uses "position" field for job title
+                title_lower = str(item.get("position", "")).lower()
                 tags_lower = [t.lower() for t in item.get("tags", [])]
                 description_lower = str(item.get("description", "")).lower()
 
@@ -93,7 +94,8 @@ def _parse_remoteok_job(data: dict) -> JobPosting:
 
     try:
         # Extract skills from title and description
-        title = data.get("title", "")
+        # RemoteOK uses "position" field for job title
+        title = data.get("position", "")
         description = data.get("description", "")
         tags = data.get("tags", [])
 
