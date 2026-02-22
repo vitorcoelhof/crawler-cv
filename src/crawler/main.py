@@ -1,6 +1,4 @@
-from src.crawler.github_jobs import search_jobs_github
-from src.crawler.gupy_scraper import search_jobs_gupy
-from src.crawler.remoteok_api import search_remoteok_jobs
+from src.crawler.multi_source_aggregator import search_all_sources
 from src.crawler.jobs_manager import load_jobs, save_jobs, merge_jobs
 from src.config import JOBS_FILE
 from src.types import ResumeProfile
@@ -31,33 +29,9 @@ def run_crawler(skills: list = None) -> int:
 
     all_jobs = []
 
-    # Step 1: Search GitHub Jobs API
-    logger.info(f"Searching GitHub Jobs API with skills: {', '.join(skills[:5])}...")
-    try:
-        github_jobs = search_jobs_github(keywords=skills)
-        logger.info(f"Found {len(github_jobs)} jobs from GitHub Jobs API")
-        all_jobs.extend(github_jobs)
-    except Exception as e:
-        logger.warning(f"GitHub Jobs API failed: {e}")
-
-    # Step 2: Scrape Gupy
-    logger.info("Scraping Gupy for Brazilian company jobs...")
-    try:
-        gupy_jobs = search_jobs_gupy()
-        logger.info(f"Found {len(gupy_jobs)} jobs from Gupy scraper")
-        all_jobs.extend(gupy_jobs)
-    except Exception as e:
-        logger.warning(f"Gupy scraper failed: {e}")
-
-    # Step 3: Search RemoteOK API (fallback if other sources failed)
-    if not all_jobs:
-        logger.info("Searching RemoteOK API for remote jobs...")
-        try:
-            remoteok_jobs = search_remoteok_jobs(keywords=skills)
-            logger.info(f"Found {len(remoteok_jobs)} jobs from RemoteOK")
-            all_jobs.extend(remoteok_jobs)
-        except Exception as e:
-            logger.warning(f"RemoteOK API failed: {e}")
+    # Search all available job sources (RemoteOK, InfoJobs, etc)
+    logger.info(f"Searching all job sources for skills: {', '.join(skills[:5])}...")
+    all_jobs = search_all_sources(keywords=skills, max_jobs_per_source=50)
 
     if not all_jobs:
         logger.warning("No jobs found from external sources.")
