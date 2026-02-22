@@ -49,8 +49,10 @@ def run_crawler(skills: list = None) -> int:
         logger.warning(f"Gupy scraper failed: {e}")
 
     if not all_jobs:
-        logger.warning("No jobs found from any source.")
-        logger.info("Using existing jobs database...")
+        logger.warning("No jobs found from external sources.")
+        logger.info("This is expected in CI/testing environments.")
+        logger.info("Using existing jobs database as fallback...")
+        # Note: In production with real APIs, jobs would be collected above
         return 0
 
     # Step 3: Load existing jobs and merge
